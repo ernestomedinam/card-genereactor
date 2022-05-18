@@ -7,11 +7,15 @@ import "./assets/img/4geeks.ico";
 import { Card } from "./Card";
 
 window.onload = function() {
-  // generate new random card
-  const firstCard = new Card();
-  // store random card on window memory
-  window.currentCard = firstCard;
-  // render our card with values stored on window memory
+  // updates code to create window currentCard
+  // and setCurrentCard method
+  window.state = {
+    currentCard: new Card(),
+    setCurrentCard: function(card = new Card()) {
+      this.currentCard = card;
+      render();
+    }
+  };
   render();
 };
 
@@ -20,7 +24,7 @@ function render() {
 
   // create a card element
   const card = buildCard();
-  card.addEventListener("click", refreshCard);
+  card.addEventListener("click", () => window.state.setCurrentCard());
 
   // create a top-suit element
   const topSuit = buildSuit("top");
@@ -50,11 +54,9 @@ function buildCard() {
   card.style.cursor = "pointer";
   card.style.transition = "transform 0.1s linear 0s";
   card.addEventListener("mouseenter", function(event) {
-    console.log(this);
     this.style.transform = "scale(1.1)";
   });
   card.addEventListener("mouseleave", function(event) {
-    console.log(this);
     this.style.transform = "scale(1)";
   });
   return card;
@@ -64,8 +66,8 @@ function buildSuit() {
   // creates div and adds common suit styles and values
   const suit = document.createElement("div");
   suit.style.fontSize = "5rem";
-  suit.style.color = window.currentCard.suit.color;
-  suit.textContent = window.currentCard.suit.value;
+  suit.style.color = window.state.currentCard.suit.color;
+  suit.textContent = window.state.currentCard.suit.value;
   // using JS arguments variable for functions...
   for (let arg of Object.values(arguments)) {
     // we add class names based on 'top' or 'bottom' argument
@@ -86,13 +88,7 @@ function buildFaceValue() {
   value.className = "d-flex align-self-center";
   value.style.fontWeight = "600";
   value.style.fontSize = "5rem";
-  value.style.color = window.currentCard.suit.color;
-  value.textContent = window.currentCard.value;
+  value.style.color = window.state.currentCard.suit.color;
+  value.textContent = window.state.currentCard.value;
   return value;
-}
-
-function refreshCard() {
-  const newCard = new Card();
-  window.currentCard = newCard;
-  render();
 }
