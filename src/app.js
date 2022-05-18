@@ -20,6 +20,7 @@ function render() {
 
   // create a card element
   const card = buildCard();
+  card.addEventListener("click", refreshCard);
 
   // create a top-suit element
   const topSuit = buildSuit("top");
@@ -46,6 +47,16 @@ function buildCard() {
   card.style.height = "30rem";
   card.style.border = "solid black 2px";
   card.style.borderRadius = "1rem";
+  card.style.cursor = "pointer";
+  card.style.transition = "transform 0.1s linear 0s";
+  card.addEventListener("mouseenter", function(event) {
+    console.log(this);
+    this.style.transform = "scale(1.1)";
+  });
+  card.addEventListener("mouseleave", function(event) {
+    console.log(this);
+    this.style.transform = "scale(1)";
+  });
   return card;
 }
 
@@ -78,4 +89,10 @@ function buildFaceValue() {
   value.style.color = window.currentCard.suit.color;
   value.textContent = window.currentCard.value;
   return value;
+}
+
+function refreshCard() {
+  const newCard = new Card();
+  window.currentCard = newCard;
+  render();
 }
