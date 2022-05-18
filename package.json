@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --mode development --port 3000",
     "build": "webpack --mode development --verbose --colors --display-error-details",
-    "deploy": "node deploy-to-github.js"
+    "deploy": "node deploy-to-github.js",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -32,7 +33,9 @@
   "homepage": "https://github.com/4GeeksAcademy/vanillajs-hello#readme",
   "dependencies": {
     "@popperjs/core": "^2.10.1",
-    "bootstrap": "^5.1.1"
+    "babel-jest": "^28.1.0",
+    "bootstrap": "^5.1.1",
+    "jest": "^28.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.3",
@@ -62,5 +65,10 @@
     "webpack": "^4.44.2",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.11.0"
+  },
+  "jest": {
+    "transform": {
+      "\\.[jt]sx?$": "babel-jest"
+    }
   }
 }
