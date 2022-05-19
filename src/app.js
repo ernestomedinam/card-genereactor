@@ -17,6 +17,10 @@ window.onload = function() {
     }
   };
   render();
+  const intervalID = setInterval(() => {
+    window.state.setCurrentCard();
+  }, 1000);
+  window.state.intervalID = intervalID;
 };
 
 function render() {
@@ -24,8 +28,18 @@ function render() {
 
   // create a card element
   const card = buildCard();
-  card.addEventListener("click", () => window.state.setCurrentCard());
-
+  card.addEventListener("click", () => {
+    if (window.state.intervalID) {
+      clearInterval(window.state.intervalID);
+      window.state.intervalID = undefined;
+    } else {
+      const intervalID = setInterval(() => {
+        window.state.setCurrentCard();
+      }, 1000);
+      window.state.intervalID = intervalID;
+      window.state.setCurrentCard();
+    }
+  });
   // create a top-suit element
   const topSuit = buildSuit("top");
 
